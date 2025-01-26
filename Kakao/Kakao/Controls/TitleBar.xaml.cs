@@ -32,9 +32,9 @@ namespace Kakao.Controls
         public TitleBar()
         {
             InitializeComponent();
-            btnClose.Click += BtnClose_Click;
-            btnMaximize.Click += BtnMaximize_Click;
-            btnMinimize.Click += BtnMinimize_Click;
+            BtnClose.Click += BtnClose_Click;
+            BtnMaximize.Click += BtnMaximize_Click;
+            BtnMinimize.Click += BtnMinimize_Click;
         }
 
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)

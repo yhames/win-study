@@ -24,6 +24,7 @@ namespace Kakao
                 Shutdown();
                 return;
             }
+
             mainView.Show();
         }
     }

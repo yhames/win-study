@@ -23,7 +23,7 @@ namespace Kakao.Utils.Extensions
 
             // 부모가 FrameworkElement인 경우, 이름을 확인하고 타입이 T인지 확인합니다.
             var frameworkElement = (FrameworkElement)parent;
-            if (isNameMatch(parent, parentName) && frameworkElement is T)
+            if (IsNameMatch(parent, parentName) && frameworkElement is T)
             {
                 return (T)parent;
             }
@@ -32,12 +32,13 @@ namespace Kakao.Utils.Extensions
             return FindParent<T>(parent, parentName);
         }
 
-        private static bool isNameMatch(DependencyObject parent, string? parentName)
+        private static bool IsNameMatch(DependencyObject parent, string? parentName)
         {
             if (parentName == null)
             {
                 return true;
             }
+
             var frameworkElement = (FrameworkElement)parent;
             return frameworkElement.Name == parentName;
         }
