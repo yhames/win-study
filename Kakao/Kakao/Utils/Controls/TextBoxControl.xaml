@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:Kakao.Utils.Converters"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="200"
              x:Name="Root">
     <UserControl.Resources>
+        <converters:ValidationBorderThicknessConverter x:Key="ValidationBorderThicknessConverter" />
+        <converters:ValidationBorderBrushConverter x:Key="ValidationBorderBrushConverter" />
         <Style x:Key="BaseControl" TargetType="{x:Type FrameworkElement}">
             <Setter Property="Control.FontSize" Value="{Binding FontSize, ElementName=Root}" />
             <Setter Property="Control.FontFamily" Value="{Binding FontFamily, ElementName=Root}" />
@@ -31,6 +34,22 @@
             <Setter Property="Text" Value="{Binding Text, ElementName=Root, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderThickness">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource ValidationBorderThicknessConverter}">
+                        <Binding Path="Validation" ElementName="Root" />
+                        <Binding Path="BorderThickness" ElementName="Root" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource ValidationBorderBrushConverter}">
+                        <Binding Path="Validation" ElementName="Root" />
+                        <Binding Path="BorderBrush" ElementName="Root" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
         </Style>
     </UserControl.Resources>
     <Grid>

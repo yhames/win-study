@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Kakao.Utils.Controls
@@ -12,6 +11,12 @@ namespace Kakao.Utils.Controls
         }
 
         #region Public Properties
+
+        public bool Validation
+        {
+            get => (bool)GetValue(ValidationProperty);
+            set => SetValue(ValidationProperty, value);
+        }
 
         public new Brush BorderBrush
         {
@@ -46,6 +51,10 @@ namespace Kakao.Utils.Controls
         #endregion
 
         #region Public Statics
+
+        public static readonly DependencyProperty ValidationProperty =
+            DependencyProperty.Register(nameof(Validation), typeof(bool), typeof(TextBoxControl),
+                new PropertyMetadata(false));
 
         public new static readonly DependencyProperty BorderBrushProperty =
             DependencyProperty.Register(nameof(BorderBrush), typeof(Brush), typeof(TextBoxControl),
