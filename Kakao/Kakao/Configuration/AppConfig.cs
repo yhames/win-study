@@ -1,4 +1,5 @@
-﻿using Kakao.Views;
+﻿using Kakao.ViewModels;
+using Kakao.Views;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kakao.Configuration
@@ -9,7 +10,11 @@ namespace Kakao.Configuration
         {
             var services = new ServiceCollection();
 
-            // Service
+            // ViewModel
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<SignUpViewModel>();
+            services.AddTransient<ChangePasswordViewModel>();
 
             // View
             services.AddSingleton<MainView>();

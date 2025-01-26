@@ -7,6 +7,15 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\ChangePasswordControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\LoginControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\SingUpControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\TitleBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -15,10 +24,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\ChangePasswordControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\LoginControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\SingUpControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\TitleBar.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Fonts.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainView.xaml">

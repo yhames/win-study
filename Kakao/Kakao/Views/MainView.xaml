@@ -4,24 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kakao.Views"
-        xmlns:controls="clr-namespace:Kakao.Controls"
+        xmlns:vm="clr-namespace:Kakao.ViewModels"
+        xmlns:ctrl="clr-namespace:Kakao.Controls"
         mc:Ignorable="d"
         WindowStyle="None"
         Title="MainView" Height="640" Width="400">
+
+    <!-- View와 ViewModel을 설정-->
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <ctrl:LoginControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ChangePasswordViewModel}">
+            <ctrl:ChangePasswordControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SignUpViewModel}">
+            <ctrl:SingUpControl/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <!-- TitleBar를 상단바로 사용-->
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="20"
                       ResizeBorderThickness="2"/>
     </WindowChrome.WindowChrome>
-    <Grid>
+
+    <Grid Background="{StaticResource ColorPrimary}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <!-- Title bar -->
-        <controls:TitleBar />
+        <ctrl:TitleBar />
 
         <!-- Body -->
-        <StackPanel Grid.Row="1" Background="AliceBlue" />
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Content="로그인" Command="{Binding ToLoginCommand}"/>
+                <Button Content="비밀번호 변경" Command="{Binding ToChangePasswordCommand}"/>
+                <Button Content="회원가입" Command="{Binding ToSignUpCommand}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
