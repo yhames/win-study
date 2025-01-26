@@ -7,37 +7,19 @@ namespace Kakao.Utils.Controls;
 
 public partial class PasswordBoxControl
 {
-    #region Field
-
-    private bool _isFirst = true;
-
-    #endregion
-
     public PasswordBoxControl()
     {
         InitializeComponent();
-        Txt.TextChanged += TxtTextChanged;
-        Pwd.PasswordChanged += PwdPasswordChanged;
     }
 
     #region Method
 
-    private void TxtTextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (_isFirst || DesignerProperties.GetIsInDesignMode(this))
-        {
-            if (Pwd.Password != Txt.Text)
-            {
-                Pwd.Password = Txt.Text;
-            }
-        }
-
-        _isFirst = false;
-    }
-
+    /**
+     * FIXME: PasswordBox와 TextBox를 직접적으로 바인딩하는 방식은 보안에 취약할 수 있으므로 권장되지 않는다.
+     */
     private void PwdPasswordChanged(object sender, RoutedEventArgs e)
     {
-        Password = Pwd.Password;
+        IsPasswordEmpty = string.IsNullOrEmpty(Pwd.Password);
     }
 
     #endregion
@@ -80,6 +62,12 @@ public partial class PasswordBoxControl
         set => SetValue(PasswordProperty, value);
     }
 
+    public bool IsPasswordEmpty
+    {
+        get => (bool)GetValue(IsPasswordEmptyProperty);
+        set => SetValue(IsPasswordEmptyProperty, value);
+    }
+
     #endregion
 
     #region Public Statics
@@ -98,7 +86,7 @@ public partial class PasswordBoxControl
 
     public static readonly DependencyProperty WaterMarkTextProperty =
         DependencyProperty.Register(nameof(WaterMarkText), typeof(string), typeof(PasswordBoxControl),
-            new PropertyMetadata(null));
+            new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty WaterMarkTextColorProperty =
         DependencyProperty.Register(nameof(WaterMarkTextColor), typeof(Brush), typeof(PasswordBoxControl),
@@ -113,7 +101,11 @@ public partial class PasswordBoxControl
      */
     public static readonly DependencyProperty PasswordProperty =
         DependencyProperty.Register(nameof(Password), typeof(string), typeof(PasswordBoxControl),
-            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public static readonly DependencyProperty IsPasswordEmptyProperty =
+        DependencyProperty.Register(nameof(IsPasswordEmpty), typeof(bool), typeof(PasswordBoxControl),
+            new PropertyMetadata(true));
 
     #endregion
 }

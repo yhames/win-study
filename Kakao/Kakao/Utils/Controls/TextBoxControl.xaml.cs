@@ -66,7 +66,7 @@ namespace Kakao.Utils.Controls
 
         public static readonly DependencyProperty WaterMarkTextProperty =
             DependencyProperty.Register(nameof(WaterMarkText), typeof(string), typeof(TextBoxControl),
-                new PropertyMetadata(null));
+                new PropertyMetadata(string.Empty));
 
         public static readonly DependencyProperty WaterMarkTextColorProperty =
             DependencyProperty.Register(nameof(WaterMarkTextColor), typeof(Brush), typeof(TextBoxControl),
@@ -81,7 +81,7 @@ namespace Kakao.Utils.Controls
          */
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(nameof(Text), typeof(string), typeof(TextBoxControl),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         #endregion
     }
