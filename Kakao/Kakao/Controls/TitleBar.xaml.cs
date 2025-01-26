@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Kakao.Utils.Extension;
+using Kakao.Utils.Extensions;
 
 namespace Kakao.Controls
 {

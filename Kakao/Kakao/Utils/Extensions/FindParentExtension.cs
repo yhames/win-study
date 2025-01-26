@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace Kakao.Utils.Extension
+namespace Kakao.Utils.Extensions
 {
     public static class FindParentExtension
     {

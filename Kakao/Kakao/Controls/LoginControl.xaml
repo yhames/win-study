@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kakao.Controls" 
-             xmlns:fa6="http://schemas.fontawesome.com/icons/svg" xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:fa6="http://schemas.fontawesome.com/icons/svg" 
+             xmlns:system="clr-namespace:System;assembly=mscorlib" 
+             xmlns:controls="clr-namespace:Kakao.Utils.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="640" d:DesignWidth="400"
              Background="{StaticResource ColorPrimary}">
@@ -32,7 +34,8 @@
 
         <!-- Body -->
         <StackPanel Grid.Row="1" Margin="60 10">
-            <ComboBox Height="{StaticResource ElementHeight}"/>
+            <controls:TextBoxControl Background="White" Height="35"
+                                     WaterMarkText="카카오계정 (이메일 또는 전화번호)"/>
             <PasswordBox Height="{StaticResource ElementHeight}"/>
             <Button Content="로그인" 
                     Height="{StaticResource ElementHeight}"

@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Data;
 using FontAwesome6;
 
-namespace Kakao.Utils.Converter
+namespace Kakao.Utils.Converters
 {
     internal class WinStateIconConverter : IValueConverter
     {

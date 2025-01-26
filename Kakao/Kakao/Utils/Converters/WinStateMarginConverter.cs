@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kakao.Utils.Converter
+namespace Kakao.Utils.Converters
 {
     public class WinStateMarginConverter : IValueConverter
     {
