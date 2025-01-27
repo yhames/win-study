@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="Kakao.Utils.Controls.PasswordBoxControl"
+﻿<UserControl x:Class="Kakao.Utils.Controls.ComboBoxControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:Kakao.Utils.Converters"
+             xmlns:attaches="clr-namespace:Kakao.Utils.Attaches"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="200"
              x:Name="Root">
@@ -27,19 +28,25 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsPasswordEmpty, ElementName=Root}" Value="True">
+                <DataTrigger Binding="{Binding Text, ElementName=Cmb}" Value="">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
 
-        <!-- PasswordBox Style -->
-        <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource BaseControl}">
-            <Setter Property="Background" Value="Transparent" />
+        <!-- ComboBox Style -->
+        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseControl}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="IsEditable" Value="{Binding IsEditable, ElementName=Root}" />
+            <Setter Property="Text" Value="{Binding Text, ElementName=Root, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="SelectedItem" Value="{Binding SelectedItem, ElementName=Root}" />
+            <Setter Property="SelectedIndex" Value="{Binding SelectedIndex, ElementName=Root}" />
+            <Setter Property="ItemsSource" Value="{Binding ItemsSource, ElementName=Root}" />
+            <Setter Property="ItemContainerStyle" Value="{Binding ItemContainerStyle, ElementName=Root}" />
+            <Setter Property="attaches:ComboBoxColorProperty.Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
-        
+
         <!-- Border Style -->
         <Style TargetType="{x:Type Border}">
             <Setter Property="BorderThickness">
@@ -62,8 +69,9 @@
     </UserControl.Resources>
     <Grid>
         <TextBlock />
+        <!-- ComboBox에서 Validation에 따른 Border 색상 변경이 안됨 -->
         <Border>
-            <PasswordBox Name="Pwd" PasswordChanged="PwdPasswordChanged" />
+            <ComboBox x:Name="Cmb" />
         </Border>
     </Grid>
 </UserControl>
