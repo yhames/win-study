@@ -8,33 +8,15 @@ public static class ComboBoxExtension
 {
     public static void SetBackGround(this ComboBox comboBox, Brush brush)
     {
-        SetBackGroundOfBorder(comboBox, brush);
-        SetBackgroundOfTextBox(comboBox, brush);
+        SetToggleButtonBackground(comboBox, brush);
+        SetTextBoxBackground(comboBox, brush);
     }
 
-    public static void SetBorderBrush(this ComboBox comboBox, Brush brush)
+    private static void SetToggleButtonBackground(ComboBox comboBox, Brush brush)
     {
-        var border = comboBox.GetBorder();
-        if (border == null)
-        {
-            return;
-        }
-
-        border.BorderBrush = brush;
-    }
-
-    #region Private Methods
-
-    private static Border? GetBorder(this ComboBox comboBox)
-    {
-        var toggleButton = (ToggleButton)comboBox.Template.FindName("ToggleButton", comboBox);
-        return toggleButton?.Template.FindName("Border", comboBox) as Border;
-    }
-
-    private static void SetBackGroundOfBorder(ComboBox comboBox, Brush brush)
-    {
-        var border = comboBox.GetBorder();
-        if (border == null)
+        var toggleButton = (ToggleButton)comboBox.Template.FindName("toggleButton", comboBox);
+        var templateRoot = toggleButton?.Template.FindName("templateRoot", toggleButton);
+        if (templateRoot is not Border border)
         {
             return;
         }
@@ -42,16 +24,26 @@ public static class ComboBoxExtension
         border.Background = brush;
     }
 
-    private static void SetBackgroundOfTextBox(ComboBox comboBox, Brush brush)
+    private static void SetTextBoxBackground(ComboBox comboBox, Brush brush)
     {
         var textBox = (TextBox)comboBox.Template.FindName("PART_EditableTextBox", comboBox);
-        if (textBox?.Parent is not Border parent)
+        if (textBox?.Parent is not Border border)
         {
             return;
         }
 
-        parent.Background = brush;
+        border.Background = brush;
     }
 
-    #endregion Private Methods
+    public static void SetBorderBrush(this ComboBox comboBox, Brush brush)
+    {
+        var toggleButton = (ToggleButton)comboBox.Template.FindName("toggleButton", comboBox);
+        var templateRoot = toggleButton?.Template.FindName("templateRoot", toggleButton);
+        if (templateRoot is not Border border)
+        {
+            return;
+        }
+
+        border.BorderBrush = brush;
+    }
 }

@@ -15,13 +15,12 @@ public class ComboBoxColorProperty
     #endregion Fields
 
     # region Properties
-    
-    public static Brush GetBackground(UIElement target) =>
-        (Brush)target.GetValue(BackgroundProperty);
-    
-    public static Brush GetBorderBrush(UIElement target) =>
-        (Brush)target.GetValue(BorderBrushProperty);
-    
+
+    public static Brush GetBackground(DependencyObject obj) => (Brush)obj.GetValue(BackgroundProperty);
+    public static void SetBackground(DependencyObject obj, Brush value) => obj.SetValue(BackgroundProperty, value);
+    public static Brush GetBorderBrush(DependencyObject obj) => (Brush)obj.GetValue(BorderBrushProperty);
+    public static void SetBorderBrush(DependencyObject obj, Brush value) => obj.SetValue(BorderBrushProperty, value);
+
     public static readonly DependencyProperty BackgroundProperty =
         DependencyProperty.RegisterAttached("Background", typeof(Brush), typeof(ComboBoxColorProperty),
             new UIPropertyMetadata(null, BackgroundChanged));
