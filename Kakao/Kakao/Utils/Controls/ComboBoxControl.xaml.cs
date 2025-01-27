@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Kakao.Utils.Controls;
 
-public partial class ComboBoxControl : UserControl
+public partial class ComboBoxControl
 {
     public ComboBoxControl()
     {

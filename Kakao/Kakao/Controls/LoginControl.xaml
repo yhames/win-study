@@ -37,7 +37,7 @@
                                       Height="{StaticResource ElementHeight}"
                                       WaterMarkText="카카오계정 (이메일 또는 전화번호)"
                                       IsEditable="True"
-                                      Text=""
+                                      ItemsSource="{Binding Emails}"
                                       Validation="True" />
             <controls:PasswordBoxControl Background="White"
                                          Height="{StaticResource ElementHeight}"
