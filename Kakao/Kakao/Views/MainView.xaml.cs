@@ -1,14 +1,14 @@
-﻿using System.Windows;
-using Kakao.ViewModels;
+﻿using Kakao.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Kakao.Views
 {
-    public partial class MainView : Window
+    public partial class MainView
     {
         public MainView()
         {
             InitializeComponent();
-            DataContext = App.Current.Services.GetService(typeof(MainViewModel));
+            DataContext = App.Current.Services.GetRequiredService<MainViewModel>();
         }
     }
 }

@@ -4,8 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace Kakao.ViewModels;
 
-[ObservableObject]
-public partial class MainViewModel
+public partial class MainViewModel : ObservableObject
 {
     [ObservableProperty] private INotifyPropertyChanged _currentViewModel;
 

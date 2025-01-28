@@ -3,8 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kakao.ViewModels
 {
-    [ObservableObject]
-    public partial class LoginViewModel
+    public partial class LoginViewModel : ObservableObject
     {
         [ObservableProperty]
         private ObservableCollection<string> _emails;
