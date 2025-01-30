@@ -21,12 +21,9 @@ public partial class App : Application
     public App()
     {
         _reservationDbContextFactory = new ReservationDbContextFactory(ConnectionString);
-        var databaseReservationCreator = new DatabaseReservationCreator(_reservationDbContextFactory);
-        var databaseReservationProvider = new DatabaseReservationProvider(_reservationDbContextFactory);
-        var databaseReservationViValidator = new DatabaseReservationValidator(_reservationDbContextFactory);
+        IReservationService reservationService = new ReservationService(_reservationDbContextFactory);
 
-        var reservationBook = new ReservationBook(
-            databaseReservationProvider, databaseReservationCreator, databaseReservationViValidator);
+        var reservationBook = new ReservationBook(reservationService);
         _hotel = new Hotel("SingletonSeam Suites", reservationBook);
         _navigationStore = new NavigationStore();
     }

@@ -1,27 +1,23 @@
-﻿using WpfTutorial.DbContexts;
-using WpfTutorial.Exceptions;
+﻿using WpfTutorial.Exceptions;
 using WpfTutorial.Services;
 
 namespace WpfTutorial.Models;
 
-public class ReservationBook(
-    IReservationProvider reservationProvider,
-    IReservationCreator reservationCreator,
-    IReservationValidator reservationValidator)
+public class ReservationBook(IReservationService reservationService)
 {
     public async Task<IEnumerable<Reservation>> GetAllReservations()
     {
-        return await reservationProvider.GetAllReservations();
+        return await reservationService.FindAll();
     }
 
     public async Task AddReservation(Reservation incoming)
     {
-        var conflictingReservation = await reservationValidator.GetConflictingReservation(incoming);
+        var conflictingReservation = await reservationService.FindReservationConflicting(incoming);
         if (conflictingReservation != null)
         {
             throw new ReservationConflictException(conflictingReservation, incoming);
         }
 
-        await reservationCreator.CreateReservation(incoming);
+        await reservationService.Save(incoming);
     }
 }

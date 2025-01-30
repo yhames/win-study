@@ -1,24 +1,16 @@
 ﻿namespace WpfTutorial.Models;
 
-public class Hotel
+public class Hotel(string name, ReservationBook reservationBook)
 {
-    private readonly ReservationBook _reservationBook;
-
-    public string Name { get; }
-
-    public Hotel(string name, ReservationBook reservationBook)
-    {
-        Name = name;
-        _reservationBook = reservationBook;
-    }
+    public string Name { get; } = name;
 
     public async Task<IEnumerable<Reservation>> GetAllReservations()
     {
-        return await _reservationBook.GetAllReservations();
+        return await reservationBook.GetAllReservations();
     }
 
     public async Task MakeReservation(Reservation reservation)
     {
-        await _reservationBook.AddReservation(reservation);
+        await reservationBook.AddReservation(reservation);
     }
 }

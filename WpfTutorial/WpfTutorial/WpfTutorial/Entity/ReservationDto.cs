@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WpfTutorial.Dtos;
+namespace WpfTutorial.Entity;
 
 public class ReservationDto
 {

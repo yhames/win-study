@@ -4,7 +4,7 @@ namespace WpfTutorial.Services;
 
 public interface IReservationService
 {
-    Task CreateReservation(Reservation reservation);
-    Task<IEnumerable<Reservation>> GetAllReservations();
-    Task<Reservation?> GetConflictingReservation(Reservation reservation);
+    Task Save(Reservation reservation);
+    Task<IEnumerable<Reservation>> FindAll();
+    Task<Reservation?> FindReservationConflicting(Reservation reservation);
 }

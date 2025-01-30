@@ -1,15 +1,9 @@
 ﻿namespace WpfTutorial.Models;
 
-public class RoomId
+public class RoomId(int floorNumber, int roomNumber)
 {
-    public int FloorNumber { get; }
-    public int RoomNumber { get; }
-
-    public RoomId(int floorNumber, int roomNumber)
-    {
-        FloorNumber = floorNumber;
-        RoomNumber = roomNumber;
-    }
+    public int FloorNumber { get; } = floorNumber;
+    public int RoomNumber { get; } = roomNumber;
 
     public override bool Equals(object? obj)
     {
