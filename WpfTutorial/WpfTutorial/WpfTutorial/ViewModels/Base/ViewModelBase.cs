@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WpfTutorial.ViewModels;
+namespace WpfTutorial.ViewModels.Base;
 
 /**
  * INotifyPropertyChanged: 속성(Property)이 변경되었을 때 UI나 다른 시스템이 그 변경을 감지하고 적절히 반응하도록 설정

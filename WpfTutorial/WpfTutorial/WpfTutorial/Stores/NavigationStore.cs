@@ -1,4 +1,4 @@
-﻿using WpfTutorial.ViewModels;
+﻿using WpfTutorial.ViewModels.Base;
 
 namespace WpfTutorial.Stores;
 

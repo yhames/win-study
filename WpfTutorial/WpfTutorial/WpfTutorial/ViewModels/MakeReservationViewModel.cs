@@ -2,7 +2,9 @@
 using WpfTutorial.Commands;
 using WpfTutorial.Models;
 using WpfTutorial.Services;
+using WpfTutorial.Services.Impl;
 using WpfTutorial.Stores;
+using WpfTutorial.ViewModels.Base;
 
 namespace WpfTutorial.ViewModels;
 
@@ -17,7 +19,7 @@ public class MakeReservationViewModel : ViewModelBase
     public ICommand SubmitCommand { get; }
     public ICommand CancelCommand { get; }
 
-    public MakeReservationViewModel(Hotel hotel, NavigationService navigationService)
+    public MakeReservationViewModel(Hotel hotel, INavigationService navigationService)
     {
         SubmitCommand = new MakeReservationCommand(this, hotel, navigationService);
         CancelCommand = new NavigateCommand(navigationService);

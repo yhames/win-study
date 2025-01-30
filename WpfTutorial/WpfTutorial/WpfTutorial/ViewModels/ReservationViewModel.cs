@@ -1,4 +1,5 @@
 ﻿using WpfTutorial.Models;
+using WpfTutorial.ViewModels.Base;
 
 namespace WpfTutorial.ViewModels;
 

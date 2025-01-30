@@ -1,20 +1,22 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using WpfTutorial.Commands.Base;
 using WpfTutorial.Exceptions;
 using WpfTutorial.Models;
 using WpfTutorial.Services;
+using WpfTutorial.Services.Impl;
 using WpfTutorial.ViewModels;
 
 namespace WpfTutorial.Commands;
 
-public class MakeReservationCommand : CommandBase
+public class MakeReservationCommand : AsyncCommandBase
 {
     private readonly MakeReservationViewModel _makeReservationViewModel;
     private readonly Hotel _hotel;
-    private readonly NavigationService _navigationService;
+    private readonly INavigationService _navigationService;
 
     public MakeReservationCommand(MakeReservationViewModel makeReservationViewModel, Hotel hotel,
-        NavigationService navigationService)
+        INavigationService navigationService)
     {
         _makeReservationViewModel = makeReservationViewModel;
         _navigationService = navigationService;
@@ -35,7 +37,7 @@ public class MakeReservationCommand : CommandBase
                && base.CanExecute(parameter);
     }
 
-    public override void Execute(object? parameter)
+    protected override async Task ExecuteAsync(object? parameter)
     {
         var roomId = new RoomId(_makeReservationViewModel.FloorNumber, _makeReservationViewModel.RoomNumber);
         var reservation = new Reservation(
@@ -46,14 +48,19 @@ public class MakeReservationCommand : CommandBase
 
         try
         {
-            _hotel.MakeReservation(reservation);
+            await _hotel.MakeReservation(reservation);
             MessageBox.Show("Reservation added successfully", "Success",
                 MessageBoxButton.OK, MessageBoxImage.Information);
             _navigationService.Navigate();
         }
-        catch (ReservationConflictException e)
+        catch (ReservationConflictException)
         {
             MessageBox.Show("This room has already reserved.", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (Exception)
+        {
+            MessageBox.Show("Failed to make reservation", "Error",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }

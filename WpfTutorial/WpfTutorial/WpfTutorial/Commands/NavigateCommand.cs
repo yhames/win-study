@@ -1,13 +1,12 @@
-﻿using WpfTutorial.Services;
+﻿using WpfTutorial.Commands.Base;
+using WpfTutorial.Services;
 
 namespace WpfTutorial.Commands;
 
-public class NavigateCommand(NavigationService navigationService) : CommandBase
+public class NavigateCommand(INavigationService navigationService) : CommandBase
 {
-    private readonly NavigationService _navigationService = navigationService;
-
     public override void Execute(object? parameter)
     {
-        _navigationService.Navigate();
+        navigationService.Navigate();
     }
 }

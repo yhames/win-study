@@ -1,4 +1,6 @@
-﻿namespace WpfTutorial.Models;
+﻿using WpfTutorial.Dtos;
+
+namespace WpfTutorial.Models;
 
 public class Reservation
 {
@@ -9,22 +11,11 @@ public class Reservation
 
     public TimeSpan Length => EndDate.Subtract(StartDate);
 
-
     public Reservation(RoomId roomId, string username, DateTime startDate, DateTime endDate)
     {
         RoomId = roomId;
         Username = username;
         StartDate = startDate;
         EndDate = endDate;
-    }
-
-    public bool Conflict(Reservation reservation)
-    {
-        if (!Equals(reservation.RoomId, RoomId))
-        {
-            return false;
-        }
-
-        return reservation.StartDate < EndDate && reservation.EndDate > StartDate;
     }
 }

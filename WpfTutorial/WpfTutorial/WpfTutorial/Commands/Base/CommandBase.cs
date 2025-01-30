@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace WpfTutorial.Commands;
+namespace WpfTutorial.Commands.Base;
 
 public abstract class CommandBase : ICommand
 {
