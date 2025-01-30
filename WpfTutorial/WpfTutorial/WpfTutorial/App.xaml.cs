@@ -3,6 +3,7 @@ using WpfTutorial.Models;
 using WpfTutorial.Services;
 using WpfTutorial.Stores;
 using WpfTutorial.ViewModels;
+using WpfTutorial.Views;
 
 namespace WpfTutorial;
 

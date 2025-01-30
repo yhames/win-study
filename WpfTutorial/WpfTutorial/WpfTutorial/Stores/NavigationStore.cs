@@ -4,7 +4,7 @@ namespace WpfTutorial.Stores;
 
 public class NavigationStore
 {
-    private ViewModelBase _currentViewModel;
+    private ViewModelBase? _currentViewModel;
 
     public event Action? CurrentViewModelChanged;
 
@@ -13,7 +13,7 @@ public class NavigationStore
         CurrentViewModelChanged?.Invoke();
     }
 
-    public ViewModelBase CurrentViewModel
+    public ViewModelBase? CurrentViewModel
     {
         get => _currentViewModel;
         set

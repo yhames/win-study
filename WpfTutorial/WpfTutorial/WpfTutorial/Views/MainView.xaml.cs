@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WpfTutorial;
+namespace WpfTutorial.Views;
 
 public partial class MainView : Window
 {
