@@ -4,7 +4,6 @@ using WpfTutorial.Commands.Base;
 using WpfTutorial.Exceptions;
 using WpfTutorial.Models;
 using WpfTutorial.Services;
-using WpfTutorial.Services.Impl;
 using WpfTutorial.ViewModels;
 
 namespace WpfTutorial.Commands;
@@ -29,12 +28,12 @@ public class MakeReservationCommand : AsyncCommandBase
         OnCanExecuteChanged();
     }
 
-    public override bool CanExecute(object? parameter)
+    protected override bool CanExecuteAsync(object? parameter)
     {
         return _makeReservationViewModel.FloorNumber > 0
                && !string.IsNullOrEmpty(_makeReservationViewModel.Username)
                && _makeReservationViewModel.StartDate <= _makeReservationViewModel.EndDate
-               && base.CanExecute(parameter);
+               && base.CanExecuteAsync(parameter);
     }
 
     protected override async Task ExecuteAsync(object? parameter)

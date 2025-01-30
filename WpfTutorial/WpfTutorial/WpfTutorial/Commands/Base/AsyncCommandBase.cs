@@ -1,6 +1,8 @@
-﻿namespace WpfTutorial.Commands.Base;
+﻿using System.Windows.Input;
 
-public abstract class AsyncCommandBase : CommandBase
+namespace WpfTutorial.Commands.Base;
+
+public abstract class AsyncCommandBase(Action<Exception>? onException = null) : ICommand
 {
     private bool _isExecuting;
 
@@ -14,12 +16,19 @@ public abstract class AsyncCommandBase : CommandBase
         }
     }
 
-    public override bool CanExecute(object? parameter)
+    public event EventHandler? CanExecuteChanged;
+
+    protected void OnCanExecuteChanged()
     {
-        return !IsExecuting && base.CanExecute(parameter);
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public override async void Execute(object? parameter)
+    public bool CanExecute(object? parameter)
+    {
+        return !IsExecuting && CanExecuteAsync(parameter);
+    }
+
+    public async void Execute(object? parameter)
     {
         try
         {
@@ -27,14 +36,19 @@ public abstract class AsyncCommandBase : CommandBase
             await ExecuteAsync(parameter);
             IsExecuting = false;
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            // ignored
+            onException?.Invoke(e);
         }
         finally
         {
             IsExecuting = false;
         }
+    }
+
+    protected virtual bool CanExecuteAsync(object? parameter)
+    {
+        return true;
     }
 
     protected abstract Task ExecuteAsync(object? parameter);
