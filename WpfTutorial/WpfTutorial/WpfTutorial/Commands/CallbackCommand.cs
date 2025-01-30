@@ -16,16 +16,11 @@ public class CallbackCommand(Action callback, Func<bool>? canExecute = null) : I
 
     public bool CanExecute(object? parameter)
     {
-        if (canExecute == null)
-        {
-            return true;
-        }
-
-        return canExecute();
+        return canExecute == null || canExecute();
     }
 
     public void Execute(object? parameter)
     {
-        callback?.Invoke();
+        callback.Invoke();
     }
 }

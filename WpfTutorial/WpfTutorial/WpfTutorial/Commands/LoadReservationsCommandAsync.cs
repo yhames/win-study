@@ -5,8 +5,11 @@ using WpfTutorial.ViewModels;
 
 namespace WpfTutorial.Commands;
 
-public class LoadReservationsCommand(Hotel hotel, ReservationListingViewModel viewModel)
-    : AsyncCommandBase
+public class LoadReservationsCommandAsync(
+    Hotel hotel,
+    ReservationListingViewModel viewModel,
+    Action<Exception>? onException = null)
+    : AsyncCommandBase(onException)
 {
     protected override async Task ExecuteAsync(object? parameter)
     {

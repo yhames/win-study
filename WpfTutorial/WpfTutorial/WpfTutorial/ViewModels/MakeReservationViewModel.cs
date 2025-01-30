@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using WpfTutorial.Commands;
 using WpfTutorial.Models;
 using WpfTutorial.Services;
@@ -21,7 +22,7 @@ public class MakeReservationViewModel : ViewModelBase
 
     public MakeReservationViewModel(Hotel hotel, INavigationService navigationService)
     {
-        SubmitCommand = new MakeReservationCommand(this, hotel, navigationService);
+        SubmitCommand = new MakeReservationCommandAsync(this, hotel, navigationService);
         CancelCommand = new NavigateCommand(navigationService);
     }
 

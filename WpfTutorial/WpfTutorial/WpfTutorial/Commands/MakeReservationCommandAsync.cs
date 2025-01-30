@@ -8,14 +8,14 @@ using WpfTutorial.ViewModels;
 
 namespace WpfTutorial.Commands;
 
-public class MakeReservationCommand : AsyncCommandBase
+public class MakeReservationCommandAsync : AsyncCommandBase
 {
     private readonly MakeReservationViewModel _makeReservationViewModel;
     private readonly Hotel _hotel;
     private readonly INavigationService _navigationService;
 
-    public MakeReservationCommand(MakeReservationViewModel makeReservationViewModel, Hotel hotel,
-        INavigationService navigationService)
+    public MakeReservationCommandAsync(MakeReservationViewModel makeReservationViewModel, Hotel hotel,
+        INavigationService navigationService, Action<Exception>? onException = null) : base(onException)
     {
         _makeReservationViewModel = makeReservationViewModel;
         _navigationService = navigationService;
