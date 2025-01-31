@@ -14,7 +14,7 @@ namespace WpfTutorial;
 public partial class App : Application
 {
     private const string ConnectionString = "Data Source=reservation.db";
-    private readonly Hotel _hotel;
+    private readonly HotelStore _hotelStore;
     private readonly NavigationStore _navigationStore;
     private readonly ReservationDbContextFactory _reservationDbContextFactory;
 
@@ -24,7 +24,8 @@ public partial class App : Application
         IReservationService reservationService = new ReservationService(_reservationDbContextFactory);
 
         var reservationBook = new ReservationBook(reservationService);
-        _hotel = new Hotel("SingletonSeam Suites", reservationBook);
+        var hotel = new Hotel("SingletonSeam Suites", reservationBook);
+        _hotelStore = new HotelStore(hotel);
         _navigationStore = new NavigationStore();
     }
 
@@ -46,13 +47,13 @@ public partial class App : Application
 
     private MakeReservationViewModel CreateMakeReservationViewModel()
     {
-        return new MakeReservationViewModel(_hotel,
+        return new MakeReservationViewModel(_hotelStore,
             new NavigationService(_navigationStore, CreateReservationListingViewModel));
     }
 
     private ReservationListingViewModel CreateReservationListingViewModel()
     {
         return ReservationListingViewModel.LoadViewModel(
-            _hotel, new NavigationService(_navigationStore, CreateMakeReservationViewModel));
+            _hotelStore, new NavigationService(_navigationStore, CreateMakeReservationViewModel));
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System.Windows;
 using WpfTutorial.Commands.Base;
 using WpfTutorial.Models;
+using WpfTutorial.Stores;
 using WpfTutorial.ViewModels;
 
 namespace WpfTutorial.Commands;
 
 public class LoadReservationsCommandAsync(
-    Hotel hotel,
+    HotelStore hotelStore,
     ReservationListingViewModel viewModel,
     Action<Exception>? onException = null)
     : AsyncCommandBase(onException)
@@ -15,8 +16,8 @@ public class LoadReservationsCommandAsync(
     {
         try
         {
-            var reservations = await hotel.GetAllReservations();
-            viewModel.UpdateReservations(reservations);
+            await hotelStore.Load();
+            viewModel.UpdateReservations(hotelStore.Reservations);
         }
         catch (Exception)
         {

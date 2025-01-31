@@ -3,26 +3,42 @@ using System.Windows.Input;
 using WpfTutorial.Commands;
 using WpfTutorial.Models;
 using WpfTutorial.Services;
+using WpfTutorial.Stores;
 using WpfTutorial.ViewModels.Base;
 
 namespace WpfTutorial.ViewModels;
 
 public class ReservationListingViewModel : ViewModelBase
 {
+    private readonly HotelStore _hotelStore;
     private readonly ObservableCollection<ReservationViewModel> _reservations = [];
     public ObservableCollection<ReservationViewModel> Reservations => _reservations;
     public ICommand LoadReservationsCommand { get; }
     public ICommand MakeReservationCommand { get; }
 
-    private ReservationListingViewModel(Hotel hotel, INavigationService navigationService)
+    private ReservationListingViewModel(HotelStore hotelStore, INavigationService navigationService)
     {
+        _hotelStore = hotelStore;
         MakeReservationCommand = new NavigateCommand(navigationService);
-        LoadReservationsCommand = new LoadReservationsCommandAsync(hotel, this);
+        LoadReservationsCommand = new LoadReservationsCommandAsync(hotelStore, this);
+        _hotelStore.ReservationAdded += OnReservationAdded;
     }
 
-    public static ReservationListingViewModel LoadViewModel(Hotel hotel, INavigationService navigationService)
+    public override void Dispose()
     {
-        var viewModel = new ReservationListingViewModel(hotel, navigationService);
+        _hotelStore.ReservationAdded -= OnReservationAdded;
+        base.Dispose();
+    }
+
+    private void OnReservationAdded(Reservation reservation)
+    {
+        var reservationViewModel = new ReservationViewModel(reservation);
+        Reservations.Add(reservationViewModel);
+    }
+
+    public static ReservationListingViewModel LoadViewModel(HotelStore hotelStore, INavigationService navigationService)
+    {
+        var viewModel = new ReservationListingViewModel(hotelStore, navigationService);
         viewModel.LoadReservationsCommand.Execute(null);
         return viewModel;
     }

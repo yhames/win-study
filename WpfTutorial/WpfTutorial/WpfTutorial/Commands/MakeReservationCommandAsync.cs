@@ -4,6 +4,7 @@ using WpfTutorial.Commands.Base;
 using WpfTutorial.Exceptions;
 using WpfTutorial.Models;
 using WpfTutorial.Services;
+using WpfTutorial.Stores;
 using WpfTutorial.ViewModels;
 
 namespace WpfTutorial.Commands;
@@ -11,15 +12,15 @@ namespace WpfTutorial.Commands;
 public class MakeReservationCommandAsync : AsyncCommandBase
 {
     private readonly MakeReservationViewModel _makeReservationViewModel;
-    private readonly Hotel _hotel;
+    private readonly HotelStore _hotelStore;
     private readonly INavigationService _navigationService;
 
-    public MakeReservationCommandAsync(MakeReservationViewModel makeReservationViewModel, Hotel hotel,
+    public MakeReservationCommandAsync(MakeReservationViewModel makeReservationViewModel, HotelStore hotelStore,
         INavigationService navigationService, Action<Exception>? onException = null) : base(onException)
     {
         _makeReservationViewModel = makeReservationViewModel;
         _navigationService = navigationService;
-        _hotel = hotel;
+        _hotelStore = hotelStore;
         makeReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
@@ -47,7 +48,7 @@ public class MakeReservationCommandAsync : AsyncCommandBase
 
         try
         {
-            await _hotel.MakeReservation(reservation);
+            await _hotelStore.MakeReservation(reservation);
             MessageBox.Show("Reservation added successfully", "Success",
                 MessageBoxButton.OK, MessageBoxImage.Information);
             _navigationService.Navigate();
