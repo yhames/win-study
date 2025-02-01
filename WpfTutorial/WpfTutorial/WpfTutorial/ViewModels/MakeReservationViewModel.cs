@@ -29,10 +29,10 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
         return propertyName == null ? [] : _propertyNameToErrorsDictionary.GetValueOrDefault(propertyName, []);
     }
 
-    public MakeReservationViewModel(HotelStore hotelStore, INavigationService navigationService)
+    public MakeReservationViewModel(HotelStore hotelStore, NavigationService<ReservationListingViewModel> navigationService)
     {
         SubmitCommand = new MakeReservationCommandAsync(this, hotelStore, navigationService);
-        CancelCommand = new NavigateCommand(navigationService);
+        CancelCommand = new NavigateCommand<ReservationListingViewModel>(navigationService);
         _propertyNameToErrorsDictionary = new Dictionary<string, List<string>>();
     }
 

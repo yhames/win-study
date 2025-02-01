@@ -15,6 +15,7 @@ public class ReservationListingViewModel : ViewModelBase
     public ObservableCollection<ReservationViewModel> Reservations => _reservations;
 
     private bool _isLoading;
+
     public bool IsLoading
     {
         get => _isLoading;
@@ -25,7 +26,7 @@ public class ReservationListingViewModel : ViewModelBase
         }
     }
 
-    private string _errorMessage;
+    private string _errorMessage = string.Empty;
 
     public string ErrorMessage
     {
@@ -37,17 +38,16 @@ public class ReservationListingViewModel : ViewModelBase
             OnPropertyChanged(nameof(HasErrorMessage));
         }
     }
-    
+
     public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
 
-    
     public ICommand LoadReservationsCommand { get; }
     public ICommand MakeReservationCommand { get; }
 
-    private ReservationListingViewModel(HotelStore hotelStore, INavigationService navigationService)
+    public ReservationListingViewModel(HotelStore hotelStore, NavigationService<MakeReservationViewModel> navigationService)
     {
         _hotelStore = hotelStore;
-        MakeReservationCommand = new NavigateCommand(navigationService);
+        MakeReservationCommand = new NavigateCommand<MakeReservationViewModel>(navigationService);
         LoadReservationsCommand = new LoadReservationsCommandAsync(hotelStore, this);
         _hotelStore.ReservationAdded += OnReservationAdded;
     }
@@ -64,7 +64,8 @@ public class ReservationListingViewModel : ViewModelBase
         Reservations.Add(reservationViewModel);
     }
 
-    public static ReservationListingViewModel LoadViewModel(HotelStore hotelStore, INavigationService navigationService)
+    public static ReservationListingViewModel LoadViewModel(HotelStore hotelStore,
+        NavigationService<MakeReservationViewModel> navigationService)
     {
         var viewModel = new ReservationListingViewModel(hotelStore, navigationService);
         viewModel.LoadReservationsCommand.Execute(null);

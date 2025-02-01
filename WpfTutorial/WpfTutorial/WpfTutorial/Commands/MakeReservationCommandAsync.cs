@@ -6,6 +6,7 @@ using WpfTutorial.Models;
 using WpfTutorial.Services;
 using WpfTutorial.Stores;
 using WpfTutorial.ViewModels;
+using WpfTutorial.ViewModels.Base;
 
 namespace WpfTutorial.Commands;
 
@@ -13,10 +14,11 @@ public class MakeReservationCommandAsync : AsyncCommandBase
 {
     private readonly MakeReservationViewModel _makeReservationViewModel;
     private readonly HotelStore _hotelStore;
-    private readonly INavigationService _navigationService;
+    private readonly NavigationService<ReservationListingViewModel> _navigationService;
 
     public MakeReservationCommandAsync(MakeReservationViewModel makeReservationViewModel, HotelStore hotelStore,
-        INavigationService navigationService, Action<Exception>? onException = null) : base(onException)
+        NavigationService<ReservationListingViewModel> navigationService,
+        Action<Exception>? onException = null) : base(onException)
     {
         _makeReservationViewModel = makeReservationViewModel;
         _navigationService = navigationService;
