@@ -12,8 +12,8 @@ namespace WpfTutorial.Stores;
 public class HotelStore
 {
     private readonly Hotel _hotel;
-    private readonly Lazy<Task> _initializeLazy;
     private readonly List<Reservation> _reservations;
+    private Lazy<Task> _initializeLazy;
     public IEnumerable<Reservation> Reservations => _reservations;
     
     public event Action<Reservation>? ReservationAdded;
@@ -22,12 +22,20 @@ public class HotelStore
     {
         _hotel = hotel;
         _initializeLazy = new Lazy<Task>(Initialize);
-        _reservations = new List<Reservation>();
+        _reservations = [];
     }
 
     public async Task Load()
     {
-        await _initializeLazy.Value;
+        try
+        {
+            await _initializeLazy.Value;
+        }
+        catch (Exception)
+        {
+            _initializeLazy = new Lazy<Task>(Initialize);
+            throw;
+        }
     }
 
     public async Task MakeReservation(Reservation reservation)
@@ -47,5 +55,6 @@ public class HotelStore
         var reservations = await _hotel.GetAllReservations();
         _reservations.Clear();
         _reservations.AddRange(reservations);
+        // throw new Exception();
     }
 }

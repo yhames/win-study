@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using WpfTutorial.Commands.Base;
-using WpfTutorial.Models;
+﻿using WpfTutorial.Commands.Base;
 using WpfTutorial.Stores;
 using WpfTutorial.ViewModels;
 
@@ -14,6 +12,7 @@ public class LoadReservationsCommandAsync(
 {
     protected override async Task ExecuteAsync(object? parameter)
     {
+        viewModel.ErrorMessage = string.Empty;
         viewModel.IsLoading = true;
         try
         {
@@ -22,10 +21,11 @@ public class LoadReservationsCommandAsync(
         }
         catch (Exception)
         {
-            MessageBox.Show("Failed to load reservations", "Error",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+            viewModel.ErrorMessage = "There was an error loading the reservations.";
         }
-
-        viewModel.IsLoading = false;
+        finally
+        {
+            viewModel.IsLoading = false;
+        }
     }
 }

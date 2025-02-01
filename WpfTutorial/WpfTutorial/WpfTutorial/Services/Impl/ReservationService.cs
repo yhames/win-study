@@ -18,6 +18,7 @@ public class ReservationService(ReservationDbContextFactory dbContextFactory) : 
     {
         await using var context = dbContextFactory.CreateDbContext();
         var reservationDtoList = await context.Reservations.ToListAsync();
+        await Task.Delay(2000);
         return reservationDtoList.Select(Reservation.FromDto);
     }
 

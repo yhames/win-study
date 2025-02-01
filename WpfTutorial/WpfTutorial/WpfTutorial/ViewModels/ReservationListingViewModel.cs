@@ -14,7 +14,7 @@ public class ReservationListingViewModel : ViewModelBase
     private readonly ObservableCollection<ReservationViewModel> _reservations = [];
     public ObservableCollection<ReservationViewModel> Reservations => _reservations;
 
-    public bool _isLoading;
+    private bool _isLoading;
     public bool IsLoading
     {
         get => _isLoading;
@@ -24,6 +24,22 @@ public class ReservationListingViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private string _errorMessage;
+
+    public string ErrorMessage
+    {
+        get => _errorMessage;
+        set
+        {
+            _errorMessage = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(HasErrorMessage));
+        }
+    }
+    
+    public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
+
     
     public ICommand LoadReservationsCommand { get; }
     public ICommand MakeReservationCommand { get; }
