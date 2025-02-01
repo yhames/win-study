@@ -13,6 +13,18 @@ public class ReservationListingViewModel : ViewModelBase
     private readonly HotelStore _hotelStore;
     private readonly ObservableCollection<ReservationViewModel> _reservations = [];
     public ObservableCollection<ReservationViewModel> Reservations => _reservations;
+
+    public bool _isLoading;
+    public bool IsLoading
+    {
+        get => _isLoading;
+        set
+        {
+            _isLoading = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public ICommand LoadReservationsCommand { get; }
     public ICommand MakeReservationCommand { get; }
 

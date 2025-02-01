@@ -14,6 +14,7 @@ public class LoadReservationsCommandAsync(
 {
     protected override async Task ExecuteAsync(object? parameter)
     {
+        viewModel.IsLoading = true;
         try
         {
             await hotelStore.Load();
@@ -24,5 +25,7 @@ public class LoadReservationsCommandAsync(
             MessageBox.Show("Failed to load reservations", "Error",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
+        viewModel.IsLoading = false;
     }
 }

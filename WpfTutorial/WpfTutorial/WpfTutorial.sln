@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTutorial", "WpfTutorial\WpfTutorial.csproj", "{32539FA3-7297-470C-8E95-4B9D8C2E4190}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadingSpinnerControl", "LoadingSpinnerControl\LoadingSpinnerControl.csproj", "{1841F7FB-0116-40AD-AD67-79C8AE4995C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{32539FA3-7297-470C-8E95-4B9D8C2E4190}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32539FA3-7297-470C-8E95-4B9D8C2E4190}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32539FA3-7297-470C-8E95-4B9D8C2E4190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1841F7FB-0116-40AD-AD67-79C8AE4995C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1841F7FB-0116-40AD-AD67-79C8AE4995C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1841F7FB-0116-40AD-AD67-79C8AE4995C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1841F7FB-0116-40AD-AD67-79C8AE4995C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

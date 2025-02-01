@@ -26,4 +26,8 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\LoadingSpinnerControl\LoadingSpinnerControl.csproj" />
+    </ItemGroup>
+
 </Project>
