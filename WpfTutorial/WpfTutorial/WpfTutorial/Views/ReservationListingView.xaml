@@ -28,13 +28,12 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="0 25 0 0">
-            <custom:LoadingSpinner Thickness="5" Diameter="100" Color="Gray"
-                                   IsLoading="{Binding IsLoading, Converter={StaticResource  BooleanToVisibilityConverter}}" />
-            <Grid Visibility="{Binding IsLoading, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+            <custom:LoadingSpinner Thickness="5" Diameter="100" Color="Gray" IsLoading="{Binding IsSubmitting}" />
+            <Grid Visibility="{Binding IsSubmitting, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                 <TextBlock Text="{Binding ErrorMessage}" Foreground="Red"
                            Visibility="{Binding HasErrorMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <Grid
-                    Visibility="{Binding HasErrorMessage,Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                    Visibility="{Binding HasErrorMessage, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                     <TextBlock Text="No reservations have been made."
                                Visibility="{Binding HasReservations, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                     <ListView ItemsSource="{Binding Reservations}"

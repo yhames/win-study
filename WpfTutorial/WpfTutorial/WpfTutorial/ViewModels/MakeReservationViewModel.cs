@@ -10,12 +10,6 @@ namespace WpfTutorial.ViewModels;
 
 public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
 {
-    private string _username = string.Empty;
-    private int _floorNumber;
-    private int _roomNumber;
-    private DateTime _startDate = DateTime.Now;
-    private DateTime _endDate = DateTime.Now.AddDays(7);
-
     public ICommand SubmitCommand { get; }
     public ICommand CancelCommand { get; }
 
@@ -24,17 +18,22 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
     public bool HasErrors => _propertyNameToErrorsDictionary.Any();
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
+    public bool HasSubmitErrorMessage => !string.IsNullOrEmpty(SubmitErrorMessage);
+
     public IEnumerable GetErrors(string? propertyName)
     {
         return propertyName == null ? [] : _propertyNameToErrorsDictionary.GetValueOrDefault(propertyName, []);
     }
 
-    public MakeReservationViewModel(HotelStore hotelStore, NavigationService<ReservationListingViewModel> navigationService)
+    public MakeReservationViewModel(HotelStore hotelStore,
+        NavigationService<ReservationListingViewModel> navigationService)
     {
         SubmitCommand = new MakeReservationCommandAsync(this, hotelStore, navigationService);
         CancelCommand = new NavigateCommand<ReservationListingViewModel>(navigationService);
         _propertyNameToErrorsDictionary = new Dictionary<string, List<string>>();
     }
+
+    private string _username = string.Empty;
 
     public string Username
     {
@@ -43,8 +42,17 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
         {
             _username = value;
             OnPropertyChanged();
+            
+            ClearError(nameof(Username));
+            if(!HasUsername)
+            {
+                AddError(nameof(Username), "Username cannot be empty.");
+            }
+            OnPropertyChanged(nameof(CanCreateReservation));
         }
     }
+
+    private int _floorNumber;
 
     public int FloorNumber
     {
@@ -53,8 +61,17 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
         {
             _floorNumber = value;
             OnPropertyChanged();
+            
+            ClearError(nameof(FloorNumber));
+            if (!HasFloorNumberGreaterThanZero)
+            {
+                AddError(nameof(FloorNumber), "Floor number must be greater than zero.");
+            }
+            OnPropertyChanged(nameof(CanCreateReservation));
         }
     }
+
+    private int _roomNumber;
 
     public int RoomNumber
     {
@@ -63,8 +80,17 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
         {
             _roomNumber = value;
             OnPropertyChanged();
+            
+            ClearError(nameof(RoomNumber));
+            if (!HasRoomNumberGreaterThanZero)
+            {
+                AddError(nameof(RoomNumber), "Room number must be greater than zero.");
+            }
+            OnPropertyChanged(nameof(CanCreateReservation));
         }
     }
+
+    private DateTime _startDate = DateTime.Now;
 
     public DateTime StartDate
     {
@@ -78,10 +104,14 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
             ClearError(nameof(EndDate));
             if (EndDate < StartDate)
             {
+                AddError(nameof(EndDate), "End date cannot be before Start date");
                 AddError(nameof(StartDate), "Start date cannot be before end date");
             }
+            OnPropertyChanged(nameof(CanCreateReservation));
         }
     }
+
+    private DateTime _endDate = DateTime.Now.AddDays(7);
 
     public DateTime EndDate
     {
@@ -95,8 +125,35 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
             ClearError(nameof(EndDate));
             if (EndDate < StartDate)
             {
+                AddError(nameof(StartDate), "Start date cannot be before end date");
                 AddError(nameof(EndDate), "End date cannot be before Start date");
             }
+            OnPropertyChanged(nameof(CanCreateReservation));
+        }
+    }
+
+    private bool _isSubmitting;
+
+    public bool IsSubmitting
+    {
+        get => _isSubmitting;
+        set
+        {
+            _isSubmitting = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _submitErrorMessage = string.Empty;
+
+    public string SubmitErrorMessage
+    {
+        get => _submitErrorMessage;
+        set
+        {
+            _submitErrorMessage = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(HasSubmitErrorMessage));
         }
     }
 
@@ -121,4 +178,16 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
     {
         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
     }
+
+    public bool CanCreateReservation =>
+        HasUsername &&
+        HasFloorNumberGreaterThanZero &&
+        HasRoomNumberGreaterThanZero &&
+        HasStartDateBeforeEndDate &&
+        !HasErrors;
+
+    private bool HasUsername => !string.IsNullOrEmpty(Username);
+    private bool HasFloorNumberGreaterThanZero => FloorNumber > 0;
+    private bool HasRoomNumberGreaterThanZero => RoomNumber > 0;
+    private bool HasStartDateBeforeEndDate => StartDate < EndDate;
 }

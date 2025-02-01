@@ -11,6 +11,7 @@ public class ReservationService(ReservationDbContextFactory dbContextFactory) : 
         await using var context = dbContextFactory.CreateDbContext();
         var reservationDto = reservation.ToDto();
         context.Reservations.Add(reservationDto);
+        await Task.Delay(2000);
         await context.SaveChangesAsync();
     }
 

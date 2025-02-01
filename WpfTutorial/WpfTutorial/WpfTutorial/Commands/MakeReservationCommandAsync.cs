@@ -12,18 +12,18 @@ namespace WpfTutorial.Commands;
 
 public class MakeReservationCommandAsync : AsyncCommandBase
 {
-    private readonly MakeReservationViewModel _makeReservationViewModel;
     private readonly HotelStore _hotelStore;
+    private readonly MakeReservationViewModel _viewModel;
     private readonly NavigationService<ReservationListingViewModel> _navigationService;
 
-    public MakeReservationCommandAsync(MakeReservationViewModel makeReservationViewModel, HotelStore hotelStore,
+    public MakeReservationCommandAsync(MakeReservationViewModel viewModel, HotelStore hotelStore,
         NavigationService<ReservationListingViewModel> navigationService,
         Action<Exception>? onException = null) : base(onException)
     {
-        _makeReservationViewModel = makeReservationViewModel;
+        _viewModel = viewModel;
         _navigationService = navigationService;
         _hotelStore = hotelStore;
-        makeReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
+        _viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -33,20 +33,21 @@ public class MakeReservationCommandAsync : AsyncCommandBase
 
     protected override bool CanExecuteAsync(object? parameter)
     {
-        return _makeReservationViewModel.FloorNumber > 0
-               && !string.IsNullOrEmpty(_makeReservationViewModel.Username)
-               && _makeReservationViewModel.StartDate <= _makeReservationViewModel.EndDate
+        return _viewModel.FloorNumber > 0
+               && !string.IsNullOrEmpty(_viewModel.Username)
+               && _viewModel.StartDate <= _viewModel.EndDate
                && base.CanExecuteAsync(parameter);
     }
 
     protected override async Task ExecuteAsync(object? parameter)
     {
-        var roomId = new RoomId(_makeReservationViewModel.FloorNumber, _makeReservationViewModel.RoomNumber);
+        _viewModel.IsSubmitting = true;
+        var roomId = new RoomId(_viewModel.FloorNumber, _viewModel.RoomNumber);
         var reservation = new Reservation(
             roomId,
-            _makeReservationViewModel.Username,
-            _makeReservationViewModel.StartDate,
-            _makeReservationViewModel.EndDate);
+            _viewModel.Username,
+            _viewModel.StartDate,
+            _viewModel.EndDate);
 
         try
         {
@@ -57,13 +58,19 @@ public class MakeReservationCommandAsync : AsyncCommandBase
         }
         catch (ReservationConflictException)
         {
-            MessageBox.Show("This room has already reserved.", "Error",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+            _viewModel.SubmitErrorMessage = "This room is already taken on those dates.";
+        }
+        catch (InvalidReservationTimeRangeException)
+        {
+            _viewModel.SubmitErrorMessage = "Start date must be before end date.";
         }
         catch (Exception)
         {
-            MessageBox.Show("Failed to make reservation", "Error",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+            _viewModel.SubmitErrorMessage = "Failed to make reservation.";
+        }
+        finally
+        {
+            _viewModel.IsSubmitting = false;
         }
     }
 }
