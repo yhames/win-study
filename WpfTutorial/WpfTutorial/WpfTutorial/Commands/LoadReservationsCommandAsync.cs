@@ -21,7 +21,7 @@ public class LoadReservationsCommandAsync(
         }
         catch (Exception)
         {
-            viewModel.ErrorMessage = "There was an error loading the reservations.";
+            viewModel.ErrorMessage = "Failed to load reservations.";
         }
         finally
         {

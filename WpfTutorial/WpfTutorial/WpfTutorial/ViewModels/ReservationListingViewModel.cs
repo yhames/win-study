@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Windows.Input;
 using WpfTutorial.Commands;
 using WpfTutorial.Models;
@@ -26,6 +27,8 @@ public class ReservationListingViewModel : ViewModelBase
         }
     }
 
+    public bool HasReservations => _reservations.Any();
+
     private string _errorMessage = string.Empty;
 
     public string ErrorMessage
@@ -44,12 +47,14 @@ public class ReservationListingViewModel : ViewModelBase
     public ICommand LoadReservationsCommand { get; }
     public ICommand MakeReservationCommand { get; }
 
-    public ReservationListingViewModel(HotelStore hotelStore, NavigationService<MakeReservationViewModel> navigationService)
+    public ReservationListingViewModel(HotelStore hotelStore,
+        NavigationService<MakeReservationViewModel> navigationService)
     {
         _hotelStore = hotelStore;
         MakeReservationCommand = new NavigateCommand<MakeReservationViewModel>(navigationService);
         LoadReservationsCommand = new LoadReservationsCommandAsync(hotelStore, this);
         _hotelStore.ReservationAdded += OnReservationAdded;
+        _reservations.CollectionChanged += OnReservationsChanged;
     }
 
     public override void Dispose()
@@ -63,6 +68,12 @@ public class ReservationListingViewModel : ViewModelBase
         var reservationViewModel = new ReservationViewModel(reservation);
         Reservations.Add(reservationViewModel);
     }
+
+    private void OnReservationsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(HasReservations));
+    }
+
 
     public static ReservationListingViewModel LoadViewModel(HotelStore hotelStore,
         NavigationService<MakeReservationViewModel> navigationService)
