@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WpfTutorial.DbContexts;
@@ -34,10 +33,10 @@ public static class HostBuilderExtension
 
     public static IHostBuilder ConfigureModels(this IHostBuilder hostBuilder)
     {
-        return hostBuilder.ConfigureServices(services =>
+        return hostBuilder.ConfigureServices((hostContext, services) =>
         {
             services.AddTransient<ReservationBook>();
-            services.AddSingleton(CreateHotel);
+            services.AddSingleton(s => CreateHotel(hostContext, s));
         });
     }
 
@@ -81,12 +80,13 @@ public static class HostBuilderExtension
         });
     }
 
-    #region PrivateMethods
+    #region Helpers
 
-    private static Hotel CreateHotel(IServiceProvider services)
+    private static Hotel CreateHotel(HostBuilderContext hostContext, IServiceProvider services)
     {
+        var hotelName = hostContext.Configuration.GetValue<string>("HotelName")!;
         var reservationBook = services.GetRequiredService<ReservationBook>();
-        return new Hotel("SingletonSeam Suites", reservationBook);
+        return new Hotel(hotelName, reservationBook);
     }
 
     private static ReservationListingViewModel CreateReservationListingViewModel(IServiceProvider services)
@@ -96,5 +96,5 @@ public static class HostBuilderExtension
         return ReservationListingViewModel.LoadViewModel(hostStore, navigationService);
     }
 
-    #endregion PrivateMethods
+    #endregion Helpers
 }

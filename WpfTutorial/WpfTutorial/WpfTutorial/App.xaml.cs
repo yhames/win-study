@@ -1,14 +1,10 @@
 ﻿using System.Windows;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WpfTutorial.Configuration;
 using WpfTutorial.DbContexts;
-using WpfTutorial.Models;
 using WpfTutorial.Services;
-using WpfTutorial.Services.Impl;
-using WpfTutorial.Stores;
 using WpfTutorial.ViewModels;
 using WpfTutorial.Views;
 
