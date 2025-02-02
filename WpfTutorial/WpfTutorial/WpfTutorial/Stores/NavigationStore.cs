@@ -1,10 +1,10 @@
-﻿using WpfTutorial.ViewModels.Base;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace WpfTutorial.Stores;
 
 public class NavigationStore
 {
-    private ViewModelBase? _currentViewModel;
+    private ObservableObject? _currentViewModel;
 
     public event Action? CurrentViewModelChanged;
 
@@ -13,13 +13,21 @@ public class NavigationStore
         CurrentViewModelChanged?.Invoke();
     }
 
-    public ViewModelBase? CurrentViewModel
+    public ObservableObject? CurrentViewModel
     {
         get => _currentViewModel;
         set
         {
-            _currentViewModel?.Dispose();
-            _currentViewModel = value;
+            if (_currentViewModel is ObservableRecipient recipient)
+            {
+                recipient.IsActive = false;
+                _currentViewModel = value;
+                recipient.IsActive = true;
+            }
+            else
+            {
+                _currentViewModel = value;
+            }
             OnCurrentViewModelChanged();
         }
     }

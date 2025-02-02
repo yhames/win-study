@@ -1,4 +1,5 @@
-﻿using WpfTutorial.Models;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using WpfTutorial.Models;
 using WpfTutorial.ViewModels;
 
 namespace WpfTutorial.Stores;
@@ -16,8 +17,6 @@ public class HotelStore
     private Lazy<Task> _initializeLazy;
     public IEnumerable<Reservation> Reservations => _reservations;
     
-    public event Action<Reservation>? ReservationAdded;
-
     public HotelStore(Hotel hotel)
     {
         _hotel = hotel;
@@ -45,9 +44,9 @@ public class HotelStore
         OnReservationAdded(reservation);
     }
 
-    private void OnReservationAdded(Reservation reservation)
-    {
-        ReservationAdded?.Invoke(reservation);
+    private static void OnReservationAdded(Reservation reservation)
+    { 
+        StrongReferenceMessenger.Default.Send(new ReservationAddedMessage(reservation));
     }
 
     private async Task Initialize()

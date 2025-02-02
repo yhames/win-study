@@ -1,14 +1,13 @@
-﻿using WpfTutorial.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using WpfTutorial.Stores;
-using WpfTutorial.ViewModels.Base;
 
 namespace WpfTutorial.ViewModels;
 
-public class MainViewModel : ViewModelBase
+public class MainViewModel : ObservableObject
 {
     private readonly NavigationStore _navigationStore;
 
-    public ViewModelBase? CurrentViewModel => _navigationStore.CurrentViewModel;
+    public ObservableObject? CurrentViewModel => _navigationStore.CurrentViewModel;
 
     public MainViewModel(NavigationStore navigationStore)
     {

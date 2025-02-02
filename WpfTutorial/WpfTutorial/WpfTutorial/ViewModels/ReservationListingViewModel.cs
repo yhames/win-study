@@ -1,71 +1,81 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Windows.Input;
-using WpfTutorial.Commands;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using WpfTutorial.Models;
 using WpfTutorial.Services;
 using WpfTutorial.Stores;
-using WpfTutorial.ViewModels.Base;
 
 namespace WpfTutorial.ViewModels;
 
-public class ReservationListingViewModel : ViewModelBase
+public partial class ReservationListingViewModel : ObservableRecipient, IRecipient<ReservationAddedMessage>
 {
+    [ObservableProperty] private bool _isLoading;
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasErrorMessage))]
+    private string _errorMessage = string.Empty;
+
     private readonly HotelStore _hotelStore;
+    private readonly NavigationService<MakeReservationViewModel> _navigationService;
+
     private readonly ObservableCollection<ReservationViewModel> _reservations = [];
+
     public ObservableCollection<ReservationViewModel> Reservations => _reservations;
-
-    private bool _isLoading;
-
-    public bool IsLoading
-    {
-        get => _isLoading;
-        set
-        {
-            _isLoading = value;
-            OnPropertyChanged();
-        }
-    }
 
     public bool HasReservations => _reservations.Any();
 
-    private string _errorMessage = string.Empty;
+    public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
 
-    public string ErrorMessage
+    [RelayCommand]
+    private void MakeReservation()
     {
-        get => _errorMessage;
-        set
+        _navigationService.Navigate();
+    }
+
+    [RelayCommand]
+    private async Task LoadReservations()
+    {
+        ErrorMessage = string.Empty;
+        IsLoading = true;
+        try
         {
-            _errorMessage = value;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(HasErrorMessage));
+            await _hotelStore.Load();
+            UpdateReservations(_hotelStore.Reservations);
+        }
+        catch (Exception)
+        {
+            ErrorMessage = "Failed to load reservations.";
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 
-    public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
-
-    public ICommand LoadReservationsCommand { get; }
-    public ICommand MakeReservationCommand { get; }
-
-    public ReservationListingViewModel(HotelStore hotelStore,
+    private ReservationListingViewModel(HotelStore hotelStore,
         NavigationService<MakeReservationViewModel> navigationService)
     {
         _hotelStore = hotelStore;
-        MakeReservationCommand = new NavigateCommand<MakeReservationViewModel>(navigationService);
-        LoadReservationsCommand = new LoadReservationsCommandAsync(hotelStore, this);
-        _hotelStore.ReservationAdded += OnReservationAdded;
+        _navigationService = navigationService;
         _reservations.CollectionChanged += OnReservationsChanged;
     }
 
-    public override void Dispose()
+    protected override void OnActivated()
     {
-        _hotelStore.ReservationAdded -= OnReservationAdded;
-        base.Dispose();
+        StrongReferenceMessenger.Default.RegisterAll(this);
+        base.OnActivated();
     }
 
-    private void OnReservationAdded(Reservation reservation)
+    protected override void OnDeactivated()
     {
-        var reservationViewModel = new ReservationViewModel(reservation);
+        StrongReferenceMessenger.Default.UnregisterAll(this);
+        base.OnDeactivated();
+    }
+
+    public void Receive(ReservationAddedMessage message)
+    {
+        var reservationViewModel = new ReservationViewModel(message.Value);
         Reservations.Add(reservationViewModel);
     }
 
@@ -73,7 +83,6 @@ public class ReservationListingViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(HasReservations));
     }
-
 
     public static ReservationListingViewModel LoadViewModel(HotelStore hotelStore,
         NavigationService<MakeReservationViewModel> navigationService)

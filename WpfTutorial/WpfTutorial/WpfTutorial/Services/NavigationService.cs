@@ -1,10 +1,10 @@
-﻿using WpfTutorial.Stores;
-using WpfTutorial.ViewModels.Base;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using WpfTutorial.Stores;
 
 namespace WpfTutorial.Services;
 
 public class NavigationService<TViewModel>(NavigationStore navigationStore, Func<TViewModel> createViewModel)
-    where TViewModel : ViewModelBase
+    where TViewModel : ObservableObject
 {
     public void Navigate()
     {

@@ -1,9 +1,9 @@
-﻿using WpfTutorial.Models;
-using WpfTutorial.ViewModels.Base;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using WpfTutorial.Models;
 
 namespace WpfTutorial.ViewModels;
 
-public class ReservationViewModel(Reservation reservation) : ViewModelBase
+public class ReservationViewModel(Reservation reservation) : ObservableObject
 {
     public string RoomId => reservation.RoomId.ToString();
     public string Username => reservation.Username;
