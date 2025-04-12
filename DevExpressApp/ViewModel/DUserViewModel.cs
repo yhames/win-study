@@ -17,10 +17,9 @@ namespace DevExpressApp.ViewModel
         {
             _userService = userService;
             Users = new BindingList<DUser>();
-            InitDataLoading();
         }
 
-        private async void InitDataLoading()
+        public async Task LoadData()
         {
             try
             {

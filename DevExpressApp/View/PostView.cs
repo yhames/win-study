@@ -20,16 +20,32 @@ namespace DevExpressApp.View
         public PostView()
         {
             InitializeComponent();
-            if (!mvvmContext.IsDesignMode)
+            if (!mvvmContextMPost.IsDesignMode)
             {
-                InitializeBindings();
+                InitializeMvvmContextMPost();
+            }
+            if (!mvvmContextDPost.IsDesignMode)
+            {
+                InitializeMvvmContextDPost();
             }
         }
 
-        void InitializeBindings()
+        void InitializeMvvmContextMPost()
         {
-            var mPostViewModel = mvvmContext.OfType<MPostViewModel>();
+            var mPostViewModel = mvvmContextMPost.OfType<MPostViewModel>();
+            mPostViewModel.WithEvent(this, nameof(HandleCreated))
+                .EventToCommand(x => x.LoadData);
             mPostViewModel.SetBinding(gridControlPost, gControl => gControl.DataSource, x => x.Posts);
+
+        }
+
+        void InitializeMvvmContextDPost()
+        {
+            var dPostViewModel = mvvmContextDPost.OfType<DPostViewModel>();
+            dPostViewModel.WithEvent(this, nameof(HandleCreated))
+                .EventToCommand(x => x.LoadData);
+            dPostViewModel.SetBinding(textEditPostId, textEdit => textEdit.Text, x => x.PostId);
+            dPostViewModel.SetBinding(memoEditPostContent, memoEdit => memoEdit.Text, x => x.Content);
         }
     }
 }

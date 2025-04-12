@@ -1,4 +1,5 @@
-﻿using DevExpressApp.View;
+﻿using System.Windows;
+using DevExpressApp.View;
 
 namespace DevExpressApp
 {

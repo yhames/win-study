@@ -31,8 +31,8 @@
             components = new System.ComponentModel.Container();
             layoutControl = new DevExpress.XtraLayout.LayoutControl();
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            memoEdit1 = new DevExpress.XtraEditors.MemoEdit();
-            textEdit1 = new DevExpress.XtraEditors.TextEdit();
+            memoEditPostContent = new DevExpress.XtraEditors.MemoEdit();
+            textEditPostId = new DevExpress.XtraEditors.TextEdit();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -44,13 +44,14 @@
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlPost = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            mvvmContext = new DevExpress.Utils.MVVM.MVVMContext(components);
+            mvvmContextMPost = new DevExpress.Utils.MVVM.MVVMContext(components);
+            mvvmContextDPost = new DevExpress.Utils.MVVM.MVVMContext(components);
             ((System.ComponentModel.ISupportInitialize)layoutControl).BeginInit();
             layoutControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
             layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)memoEdit1.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)textEdit1.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)memoEditPostContent.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textEditPostId.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
@@ -62,7 +63,8 @@
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlPost).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)mvvmContext).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mvvmContextMPost).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mvvmContextDPost).BeginInit();
             SuspendLayout();
             // 
             // layoutControl
@@ -80,8 +82,8 @@
             // 
             // layoutControl1
             // 
-            layoutControl1.Controls.Add(memoEdit1);
-            layoutControl1.Controls.Add(textEdit1);
+            layoutControl1.Controls.Add(memoEditPostContent);
+            layoutControl1.Controls.Add(textEditPostId);
             layoutControl1.Location = new Point(312, 12);
             layoutControl1.Name = "layoutControl1";
             layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(1111, 244, 650, 400);
@@ -90,21 +92,21 @@
             layoutControl1.TabIndex = 5;
             layoutControl1.Text = "layoutControl1";
             // 
-            // memoEdit1
+            // memoEditPostContent
             // 
-            memoEdit1.Location = new Point(12, 100);
-            memoEdit1.Name = "memoEdit1";
-            memoEdit1.Size = new Size(652, 464);
-            memoEdit1.StyleController = layoutControl1;
-            memoEdit1.TabIndex = 4;
+            memoEditPostContent.Location = new Point(12, 91);
+            memoEditPostContent.Name = "memoEditPostContent";
+            memoEditPostContent.Size = new Size(652, 473);
+            memoEditPostContent.StyleController = layoutControl1;
+            memoEditPostContent.TabIndex = 4;
             // 
-            // textEdit1
+            // textEditPostId
             // 
-            textEdit1.Location = new Point(12, 38);
-            textEdit1.Name = "textEdit1";
-            textEdit1.Size = new Size(652, 20);
-            textEdit1.StyleController = layoutControl1;
-            textEdit1.TabIndex = 0;
+            textEditPostId.Location = new Point(12, 29);
+            textEditPostId.Name = "textEditPostId";
+            textEditPostId.Size = new Size(652, 20);
+            textEditPostId.StyleController = layoutControl1;
+            textEditPostId.TabIndex = 0;
             // 
             // layoutControlGroup1
             // 
@@ -117,41 +119,41 @@
             // 
             // layoutControlItem2
             // 
-            layoutControlItem2.Control = textEdit1;
+            layoutControlItem2.Control = textEditPostId;
             layoutControlItem2.CustomizationFormText = "layoutControlItemPostId";
             layoutControlItem2.Location = new Point(0, 0);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new Size(656, 50);
+            layoutControlItem2.Size = new Size(656, 41);
             layoutControlItem2.Text = "PostId";
             layoutControlItem2.TextLocation = DevExpress.Utils.Locations.Top;
             layoutControlItem2.TextSize = new Size(69, 14);
             // 
             // layoutControlItem3
             // 
-            layoutControlItem3.Control = memoEdit1;
+            layoutControlItem3.Control = memoEditPostContent;
             layoutControlItem3.CustomizationFormText = "layoutControlItemPostContent";
-            layoutControlItem3.Location = new Point(0, 71);
+            layoutControlItem3.Location = new Point(0, 62);
             layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new Size(656, 485);
+            layoutControlItem3.Size = new Size(656, 494);
             layoutControlItem3.Text = "PostContent";
             layoutControlItem3.TextLocation = DevExpress.Utils.Locations.Top;
             layoutControlItem3.TextSize = new Size(69, 14);
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.Location = new Point(0, 50);
+            emptySpaceItem1.Location = new Point(0, 41);
             emptySpaceItem1.Name = "emptySpaceItem1";
             emptySpaceItem1.Size = new Size(656, 10);
             // 
             // emptySpaceItem2
             // 
-            emptySpaceItem2.Location = new Point(0, 61);
+            emptySpaceItem2.Location = new Point(0, 52);
             emptySpaceItem2.Name = "emptySpaceItem2";
             emptySpaceItem2.Size = new Size(656, 10);
             // 
             // simpleSeparator1
             // 
-            simpleSeparator1.Location = new Point(0, 60);
+            simpleSeparator1.Location = new Point(0, 51);
             simpleSeparator1.Name = "simpleSeparator1";
             simpleSeparator1.Size = new Size(656, 1);
             // 
@@ -194,9 +196,13 @@
             layoutControlItem1.Size = new Size(680, 580);
             layoutControlItem1.TextVisible = false;
             // 
-            // mvvmContext
+            // mvvmContextMPost
             // 
-            mvvmContext.ContainerControl = this;
+            mvvmContextMPost.ContainerControl = this;
+            // 
+            // mvvmContextDPost
+            // 
+            mvvmContextDPost.ContainerControl = this;
             // 
             // PostView
             // 
@@ -209,8 +215,8 @@
             layoutControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
             layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)memoEdit1.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)textEdit1.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)memoEditPostContent.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textEditPostId.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
@@ -222,7 +228,8 @@
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlPost).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)mvvmContext).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mvvmContextMPost).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mvvmContextDPost).EndInit();
             ResumeLayout(false);
         }
 
@@ -233,16 +240,17 @@
         private DevExpress.XtraGrid.GridControl gridControlPost;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewPost;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlPost;
-        private DevExpress.Utils.MVVM.MVVMContext mvvmContext;
+        private DevExpress.Utils.MVVM.MVVMContext mvvmContextMPost;
         private DevExpress.XtraLayout.LayoutControl layoutControl1;
-        private DevExpress.XtraEditors.TextEdit textEdit1;
+        private DevExpress.XtraEditors.TextEdit textEditPostId;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraEditors.MemoEdit memoEdit1;
+        private DevExpress.XtraEditors.MemoEdit memoEditPostContent;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
         private DevExpress.XtraLayout.SimpleSeparator simpleSeparator1;
+        private DevExpress.Utils.MVVM.MVVMContext mvvmContextDPost;
     }
 }

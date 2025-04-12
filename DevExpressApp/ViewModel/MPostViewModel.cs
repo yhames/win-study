@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpressApp.Dto.Response;
 using DevExpressApp.Model;
@@ -17,10 +18,9 @@ namespace DevExpressApp.ViewModel
         {
             _postService = postService;
             Posts = new BindingList<MPost>();
-            InitDataLoading();
         }
 
-        private async void InitDataLoading()
+        public async Task LoadData()
         {
             try
             {

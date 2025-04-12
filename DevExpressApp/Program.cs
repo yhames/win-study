@@ -12,14 +12,11 @@ namespace DevExpressApp
 {
     internal static class Program
     {
-        static IContainer container;
+        static IContainer container = null;
 
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
             var httpClient = new HttpClient()
             {
                 BaseAddress = new Uri("https://jsonplaceholder.typicode.com"),
@@ -33,10 +30,10 @@ namespace DevExpressApp
 
             MVVMContextCompositionRoot.ViewModelCreate += (s, e) =>
             {
-                e.ViewModel = container.Resolve(e.ViewModelType);
+                e.ViewModel = container.Resolve(e.RuntimeViewModelType);
             };
 
-            
+            Application.EnableVisualStyles();
             ApplicationConfiguration.Initialize();
             Application.Run(new MainView());
         }

@@ -10,16 +10,16 @@ namespace DevExpressApp.ViewModel
     public class MUserViewModel
     {
         private readonly IUserService _userService;
+
         public BindingList<MUser> Users { get; }
 
         public MUserViewModel(IUserService userService)
         {
             _userService = userService;
             Users = new BindingList<MUser>();
-            InitDataLoading();
         }
 
-        private async void InitDataLoading()
+        public async Task LoadData()
         {
             try
             {
@@ -29,7 +29,8 @@ namespace DevExpressApp.ViewModel
                 {
                     Users.Add(user);
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error loading users: {ex.Message}");
             }

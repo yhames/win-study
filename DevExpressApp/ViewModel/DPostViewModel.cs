@@ -1,30 +1,22 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.Design;
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm.DataAnnotations;
 using DevExpressApp.Model;
 using DevExpressApp.Service;
 
 namespace DevExpressApp.ViewModel
 {
     [POCOViewModel()]
-    public class DPostViewModel
+    public class DPostViewModel(IPostService postService)
     {
-        private readonly IPostService _postService;
-        public DPost PostDetail { get; set; }
+        public string PostId { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
 
-        public DPostViewModel(IPostService postService)
-        {
-            _postService = postService;
-            PostDetail = new DPost();
-            InitDataLoading();
-        }
-
-        private async void InitDataLoading()
+        public async Task LoadData()
         {
             try
             {
-                DPost result = await _postService.GetDPostsAsync("postId");
-                PostDetail = result;
+                DPost result = await postService.GetDPostsAsync("postId");
+                PostId = result.PostId.ToString();
+                Content = result.Content;
             }
             catch (Exception ex)
             {

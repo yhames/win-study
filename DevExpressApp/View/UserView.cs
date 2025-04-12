@@ -31,26 +31,20 @@ namespace DevExpressApp.View
             }
         }
 
-        void InitializeMvvmContextMUser()
+        private void InitializeMvvmContextMUser()
         {
             var mUserViewModel = mvvmContextMUser.OfType<MUserViewModel>();
-            //mUserViewModel.WithEvent(this, nameof(HandleCreated))
-            //    .EventToCommand(x => x.OnCreate);
-            //mUserViewModel.WithEvent(this, nameof(HandleDestroyed))
-            //    .EventToCommand(x => x.OnDestroy);
+            mUserViewModel.WithEvent(this, nameof(HandleCreated))
+                .EventToCommand(x => x.LoadData);
             mUserViewModel.SetBinding(gridControlMUser, gControl => gControl.DataSource, x => x.Users);
-
         }
 
         private void InitializeMvvmContextDUser()
         {
             var dUserViewModel = mvvmContextDUser.OfType<DUserViewModel>();
-            //dUserViewModel.WithEvent(this, nameof(HandleCreated))
-            //    .EventToCommand(x => x.OnCreate);
-            //dUserViewModel.WithEvent(this, nameof(HandleDestroyed))
-            //    .EventToCommand(x => x.OnDestroy);
+            dUserViewModel.WithEvent(this, nameof(HandleCreated))
+              .EventToCommand(x => x.LoadData);
             dUserViewModel.SetBinding(gridControlDUser, gControl => gControl.DataSource, x => x.Users);
-
         }
     }
 }
