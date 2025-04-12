@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using DevExpress.XtraBars;
+﻿using DevExpressApp.View;
 
 namespace DevExpressApp
 {
@@ -15,6 +7,26 @@ namespace DevExpressApp
         public MainView()
         {
             InitializeComponent();
+        }
+
+        private void accordionControlUsers_Click(object sender, EventArgs e)
+        {
+            if (!container.Controls.Contains(UserView.Instance))
+            {
+                container.Controls.Add(UserView.Instance);
+                UserView.Instance.Dock = DockStyle.Fill;
+            }
+            UserView.Instance.BringToFront();
+        }
+
+        private void accordionControlPosts_Click(object sender, EventArgs e)
+        {
+            if (!container.Controls.Contains(PostView.Instance))
+            {
+                container.Controls.Add(PostView.Instance);
+                PostView.Instance.Dock = DockStyle.Fill;
+            }
+            PostView.Instance.BringToFront();
         }
     }
 }
