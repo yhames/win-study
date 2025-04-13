@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpressApp.Dto.Response;
 using DevExpressApp.Model;

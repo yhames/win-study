@@ -11,11 +11,15 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.1" />
     <PackageReference Include="DevExpress.Win.Design" Version="24.2.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Server\" />
     <Folder Include="Utils\" />
   </ItemGroup>
 

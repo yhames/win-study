@@ -44,7 +44,16 @@ namespace DevExpressApp.View
             var dUserViewModel = mvvmContextDUser.OfType<DUserViewModel>();
             dUserViewModel.WithEvent(this, nameof(HandleCreated))
               .EventToCommand(x => x.LoadData);
-            dUserViewModel.SetBinding(gridControlDUser, gControl => gControl.DataSource, x => x.Users);
+            dUserViewModel.SetBinding(textEditUserId, textEdit => textEdit.Text, x => x.UserId);
+            dUserViewModel.SetBinding(textEditEmail, textEdit => textEdit.Text, x => x.Email);
+            dUserViewModel.SetBinding(textEditAddress, textEdit => textEdit.Text, x => x.Address);
+            dUserViewModel.SetBinding(textEditPhoneNumber, textEdit => textEdit.Text, x => x.PhoneNumber);
+            dUserViewModel.SetBinding(textEditDateOfBirth, dateEdit => dateEdit.EditValue, x => x.DateOfBirth);
+            dUserViewModel.SetBinding(textEditGender, dateEdit => dateEdit.EditValue, x => x.Gender);
+            dUserViewModel.SetBinding(textEditOccupation, textEdit => textEdit.Text, x => x.Occupation);
+            dUserViewModel.SetBinding(textEditNationality, textEdit => textEdit.Text, x => x.Nationality);
+            dUserViewModel.SetBinding(pictureEditProfile, pictureEdit => pictureEdit.Image, x => x.Profile);
+
         }
     }
 }

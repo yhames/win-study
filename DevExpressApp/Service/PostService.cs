@@ -1,4 +1,7 @@
 ﻿using System.Net.Http;
+using System.Web;
+using DevExpress.Data.Utils;
+using DevExpress.Xpo.DB.Helpers;
 using DevExpressApp.Dto.Response;
 using DevExpressApp.Model;
 using Newtonsoft.Json;
@@ -14,7 +17,7 @@ namespace DevExpressApp.Service
     public class PostService : IPostService
     {
         private const string GetPostsPath = "/posts";
-        private const string GetPostPath = "/posts/detail";
+        private const string GetPostPath = "/api/posts/detail";
 
         private readonly HttpClient _httpClient;
 
@@ -25,7 +28,14 @@ namespace DevExpressApp.Service
 
         public async Task<PaginationResponse<MPost>> GetPostsAsync(int page, int perPage)
         {
-            string url = $"{GetPostsPath}?page={page}&perPage={perPage}";
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            query["page"] = page.ToString();
+            query["perPage"] = perPage.ToString();
+
+            UriBuilder uriBuilder = new UriBuilder(GetPostsPath);
+            uriBuilder.Query = query.ToString();
+            string url = uriBuilder.ToString();
+
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 

@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using DevExpressApp.Dto.Response;
 using DevExpressApp.Model;
 using Newtonsoft.Json;
@@ -8,13 +9,14 @@ namespace DevExpressApp.Service
     public interface IUserService
     {
         Task<PaginationResponse<MUser>> GetMUsersAsync(int page, int perPage);
-        Task<PaginationResponse<DUser>> GetDUsersAsync(int page, int perPage);
+        Task<DUser> GetDUsersAsync(int mUserId);
+        Task<Image> GetProfileImageAsync(string profilePictureUrl);
     }
 
     public class UserService : IUserService
     {
-        private const string GetMUserPath = "/users";
-        private const string GetDUserPath = "/users/detail";
+        private const string GetMUserPath = "/api/users";
+        private const string GetDUserPath = "/api/users/detail";
         private readonly HttpClient _httpClient;
 
         public UserService(HttpClient httpClient)
@@ -25,11 +27,11 @@ namespace DevExpressApp.Service
         public async Task<PaginationResponse<MUser>> GetMUsersAsync(int page, int perPage)
         {
             string url = $"{GetMUserPath}?page={page}&perPage={perPage}";
-            var response = await _httpClient.GetAsync(url);
+            HttpResponseMessage response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<PaginationResponse<MUser>>(content);
+            string content = await response.Content.ReadAsStringAsync();
+            PaginationResponse<MUser>? result = JsonConvert.DeserializeObject<PaginationResponse<MUser>>(content);
             if (result == null)
             {
                 throw new Exception("GetMUsersAsync: Failed to deserialize response");
@@ -37,19 +39,32 @@ namespace DevExpressApp.Service
             return result;
         }
 
-        public async Task<PaginationResponse<DUser>> GetDUsersAsync(int page, int perPage)
+        public async Task<DUser> GetDUsersAsync(int mUserId)
         {
-            string url = $"{GetDUserPath}?page={page}&perPage={perPage}";
-            var response = await _httpClient.GetAsync(url);
+            HttpResponseMessage response = await _httpClient.GetAsync($"{GetDUserPath}/{mUserId}");
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<PaginationResponse<DUser>>(content);
+            string content = await response.Content.ReadAsStringAsync();
+            DUser? result = JsonConvert.DeserializeObject<DUser>(content);
             if (result == null)
             {
                 throw new Exception("GetMUsersAsync: Failed to deserialize response");
             }
             return result;
+        }
+
+        public async Task<Image> GetProfileImageAsync(string profilePictureUrl)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync(profilePictureUrl);
+                response.EnsureSuccessStatusCode();
+                Stream imageStream = await response.Content.ReadAsStreamAsync();
+                return Image.FromStream(imageStream);
+            } catch
+            {
+                return Image.FromFile("Resources/default_profile.png");
+            }
         }
     }
 }
