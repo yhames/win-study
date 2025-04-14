@@ -10,7 +10,7 @@ namespace DevExpressApp.Service
     {
         Task<PaginationResponse<MUser>> GetMUsersAsync(int page, int perPage);
         Task<DUser> GetDUsersAsync(int mUserId);
-        Task<Image> GetProfileImageAsync(string profilePictureUrl);
+        Task<Image?> GetProfileImageAsync(string profilePictureUrl);
     }
 
     public class UserService : IUserService
@@ -53,7 +53,7 @@ namespace DevExpressApp.Service
             return result;
         }
 
-        public async Task<Image> GetProfileImageAsync(string profilePictureUrl)
+        public async Task<Image?> GetProfileImageAsync(string profilePictureUrl)
         {
             try
             {
@@ -61,9 +61,11 @@ namespace DevExpressApp.Service
                 response.EnsureSuccessStatusCode();
                 Stream imageStream = await response.Content.ReadAsStreamAsync();
                 return Image.FromStream(imageStream);
-            } catch
+            }
+            catch (Exception ex)
             {
-                return Image.FromFile("Resources/default_profile.png");
+                Console.WriteLine($"Error loading profile image: {ex.Message}");
+                return null;
             }
         }
     }

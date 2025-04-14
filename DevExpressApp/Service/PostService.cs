@@ -11,7 +11,7 @@ namespace DevExpressApp.Service
     public interface IPostService
     {
         Task<PaginationResponse<MPost>> GetPostsAsync(int page, int perPage);
-        Task<DPost> GetDPostsAsync(string postId);
+        Task<DPost> GetDPostsAsync(int postId);
     }
 
     public class PostService : IPostService
@@ -49,7 +49,7 @@ namespace DevExpressApp.Service
             return result;
         }
 
-        public async Task<DPost> GetDPostsAsync(string postId)
+        public async Task<DPost> GetDPostsAsync(int postId)
         {
             string url = $"{GetPostPath}/{postId}";
             var response = await _httpClient.GetAsync(url);

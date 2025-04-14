@@ -19,7 +19,7 @@ namespace DevExpressApp.ViewModel
             Users = new BindingList<MUser>();
         }
 
-        public async Task LoadData()
+        public async Task LoadUserMaster()
         {
             try
             {

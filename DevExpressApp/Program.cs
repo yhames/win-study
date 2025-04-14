@@ -33,7 +33,7 @@ namespace DevExpressApp
             builder.Register(c =>
             {
                 var config = c.Resolve<IConfiguration>();
-                var baseUrl = config["ServerSettings:BaseUrl"] ?? "http://127.0.0.1:8080";
+                var baseUrl = config["ServerSettings:BaseUrl"] ?? "http://127.0.0.1:8000";
                 return new HttpClient()
                 {
 

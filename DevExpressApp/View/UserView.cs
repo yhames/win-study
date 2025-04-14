@@ -1,4 +1,5 @@
-﻿using DevExpressApp.ViewModel;
+﻿using DevExpress.XtraGrid.Views.Base;
+using DevExpressApp.ViewModel;
 
 namespace DevExpressApp.View
 {
@@ -23,27 +24,27 @@ namespace DevExpressApp.View
             InitializeComponent();
             if (!mvvmContextMUser.IsDesignMode)
             {
-                InitializeMvvmContextMUser();
+                InitializeMUserBinding();
             }
             if (!mvvmContextDUser.IsDesignMode)
             {
-                InitializeMvvmContextDUser();
+                InitializeDUserBinding();
             }
         }
 
-        private void InitializeMvvmContextMUser()
+        void InitializeMUserBinding()
         {
             var mUserViewModel = mvvmContextMUser.OfType<MUserViewModel>();
             mUserViewModel.WithEvent(this, nameof(HandleCreated))
-                .EventToCommand(x => x.LoadData);
+                .EventToCommand(x => x.LoadUserMaster);
             mUserViewModel.SetBinding(gridControlMUser, gControl => gControl.DataSource, x => x.Users);
         }
 
-        private void InitializeMvvmContextDUser()
+        void InitializeDUserBinding()
         {
             var dUserViewModel = mvvmContextDUser.OfType<DUserViewModel>();
-            dUserViewModel.WithEvent(this, nameof(HandleCreated))
-              .EventToCommand(x => x.LoadData);
+            dUserViewModel.WithEvent<FocusedRowChangedEventArgs>(gridViewMUser, nameof(gridViewMUser.FocusedRowChanged))
+                .EventToCommand(x => x.LoadUserDetail, e => e.FocusedRowHandle);
             dUserViewModel.SetBinding(textEditUserId, textEdit => textEdit.Text, x => x.UserId);
             dUserViewModel.SetBinding(textEditEmail, textEdit => textEdit.Text, x => x.Email);
             dUserViewModel.SetBinding(textEditAddress, textEdit => textEdit.Text, x => x.Address);
@@ -53,7 +54,6 @@ namespace DevExpressApp.View
             dUserViewModel.SetBinding(textEditOccupation, textEdit => textEdit.Text, x => x.Occupation);
             dUserViewModel.SetBinding(textEditNationality, textEdit => textEdit.Text, x => x.Nationality);
             dUserViewModel.SetBinding(pictureEditProfile, pictureEdit => pictureEdit.Image, x => x.Profile);
-
         }
     }
 }

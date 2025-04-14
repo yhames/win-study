@@ -375,6 +375,8 @@
             // 
             gridViewMUser.GridControl = gridControlMUser;
             gridViewMUser.Name = "gridViewMUser";
+            gridViewMUser.OptionsBehavior.Editable = false;
+            gridViewMUser.OptionsView.ShowGroupPanel = false;
             // 
             // Root
             // 

@@ -1,4 +1,5 @@
-﻿using DevExpressApp.ViewModel;
+﻿using DevExpress.XtraGrid.Views.Grid;
+using DevExpressApp.ViewModel;
 
 namespace DevExpressApp.View
 {
@@ -39,11 +40,14 @@ namespace DevExpressApp.View
 
         }
 
+        public int CurrentPostId { get; set; }
+
         void InitializeMvvmContextDPost()
         {
+            CurrentPostId = 10;
             var dPostViewModel = mvvmContextDPost.OfType<DPostViewModel>();
-            dPostViewModel.WithEvent(this, nameof(HandleCreated))
-                .EventToCommand(x => x.LoadData);
+            dPostViewModel.WithEvent<RowCellClickEventArgs>(this, nameof(HandleCreated))
+                .EventToCommand(x => x.LoadData, (RowCellClickEventArgs args) => CurrentPostId);
             dPostViewModel.SetBinding(textEditPostId, textEdit => textEdit.Text, x => x.PostId);
             dPostViewModel.SetBinding(memoEditPostContent, memoEdit => memoEdit.Text, x => x.Content);
         }
